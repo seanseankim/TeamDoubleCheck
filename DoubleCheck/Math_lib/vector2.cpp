@@ -10,6 +10,7 @@
 
 vector2::vector2() noexcept
 {
+    //No Sean is the best
     x = 0.0f;
     y = 0.0f;
 };
