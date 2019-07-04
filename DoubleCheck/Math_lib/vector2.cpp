@@ -10,6 +10,7 @@
 
 vector2::vector2() noexcept
 {
+    //Fuck you
     x = 0.0f;
     y = 0.0f;
 };
