@@ -1,7 +1,13 @@
 #include <iostream>
+#include "Engine.hpp"
 
 int main()
 {
-    std::cout << "Hello world" << std::endl;
+    Engine engine;
+    engine.Init();
+    while (!engine.IsDone())
+        engine.Update();
+
+    engine.Delete();
     return 0;
 }
