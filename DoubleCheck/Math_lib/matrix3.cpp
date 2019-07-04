@@ -4,7 +4,7 @@
  *COURSE NAME       : CS230
  *TERM              : Spring 2019
  ************************************************/
-#include <CS230/math/matrix3.hpp>
+#include "Math_lib/matrix3.hpp"
 #include <CS230/math/vector2.hpp>
 #include <cassert>
 #include <limits>
