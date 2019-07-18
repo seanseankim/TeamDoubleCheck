@@ -20,10 +20,7 @@ void Engine::Update()
 
     game_timer.Reset();
 
-
-
     app_->Update(m_dt);
-    
 }
 
 void Engine::Delete()

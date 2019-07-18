@@ -1,9 +1,10 @@
 #include "Application.hpp"
 #include <iostream>
 #include "vector2.hpp"
-
+#include "Input.h"
 
 Application* Application::application = nullptr;
+
 
 namespace
 {
@@ -34,7 +35,7 @@ void Application::Init()
     glfwWindowHint(GLFW_DEPTH_BITS, 24);
     glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
 
-    window = glfwCreateWindow(1280, 720, "sexking", nullptr, nullptr);
+    window = glfwCreateWindow(1280, 720, "sangministhebest", nullptr, nullptr);
     glfwMakeContextCurrent(window);
 
     if (!window)
@@ -68,8 +69,20 @@ void Application::Init()
 
 void Application::Update(float dt)
 {
+    input.Triggered_Reset();
+
     glfwSwapBuffers(window);
     glfwPollEvents();
+
+    int w, h;
+    glfwGetWindowSize(window, &w, &h);
+    window_size.width = (float)w;
+    window_size.height = (float)h;
+
+    if(input.Is_Mouse_Double_Clicked(GLFW_MOUSE_BUTTON_LEFT))
+    {
+        std::cout << "aaa" << std::endl;
+    }
 }
 
 void Application::Delete()
@@ -121,68 +134,18 @@ namespace
 {
     void mouse_button_callback(GLFWwindow* /*window*/, int button, int action, int /*mods*/)
     {
-        /*
-        if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-        {
-            E_Handler->HandleMouseButtonPress(CS230::MouseButton::Left);
-        }
-        else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
-        {
-            E_Handler->HandleMouseButtonReleased(CS230::MouseButton::Left);
-        }
-        else if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
-        {
-            E_Handler->HandleMouseButtonPress(CS230::MouseButton::Right);
-        }
-        else if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE)
-        {
-            E_Handler->HandleMouseButtonReleased(CS230::MouseButton::Right);
-        }
-        else if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS)
-        {
-            E_Handler->HandleMouseButtonPress(CS230::MouseButton::Middle);
-        }
-        else if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_RELEASE)
-        {
-            E_Handler->HandleMouseButtonReleased(CS230::MouseButton::Middle);
-        }
-        else
-        {
-            E_Handler->HandleMouseButtonPress(CS230::MouseButton::None);
-        }
-        */
-
+        input.Set_Mouse_Input(button, action);
     }
     void cursor_position_callback(GLFWwindow* /*window*/, double xpos, double ypos)
     {
-        //E_Handler->HandleMouseMove(static_cast<int>(xpos), static_cast<int>(ypos));
+        input.Set_Mouse_Position(xpos, ypos);
     }
     void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action, int /*mods*/)
     {
-        if(action == GLFW_PRESS)
-        {
-            if(key == GLFW_KEY_F)
-            {
-                Application::Get_Application()->Toggle_Fullscreen();
-                if (is_full == true)
-                {
-                    is_full = false;
-                }
-                else
-                    is_full = true;
-            }
-        }
+        input.Set_Keyboard_Input(key, action);
     }
-    void scroll_callback(GLFWwindow* /*window*/, double /*xoffset*/, double yoffset)
+    void scroll_callback(GLFWwindow* /*window*/, double xoffset, double yoffset)
     {
-        /*
-        if (yoffset < 0)
-        {
-            E_Handler->HandleMouseWheelScroll(-1);
-        }
-        else if (yoffset > 0)
-        {
-            E_Handler->HandleMouseWheelScroll(1);
-        }*/
+        input.Set_Mouse_Wheel(xoffset, yoffset);
     }
 }
