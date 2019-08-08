@@ -9,6 +9,7 @@ private:
     Transform m_transform;
     Mesh m_mesh;
     std::vector<Component*>components_;
+    bool is_dead;
 
 public:
     Transform GetTransform() { return m_transform; }
@@ -18,6 +19,8 @@ public:
     template <typename COMPONENT>
     COMPONENT* GetComponentByTemplate() const;
 public:
+    void SetDeadCondition(bool condition) { is_dead = condition; }
+    bool IsDead() { return is_dead; }
     void AddComponent(Component* comp);
     void DeleteComponent(Component* comp);
 
@@ -27,6 +30,11 @@ public:
     void SetScale(float scale);
     void SetDepth(float depth);
     void SetMesh(Mesh mesh);
+
+    /*bool IsDead()
+    {
+        return is_dead;
+    }*/
 };
 
 template <typename COMPONENT>
