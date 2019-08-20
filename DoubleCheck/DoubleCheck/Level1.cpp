@@ -1,5 +1,5 @@
 #include "Level1.h"
-#include "Player.h"
+#include "Component_Player.h"
 #include "ObjectManager.h"
 
 void Level1::Load()

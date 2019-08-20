@@ -33,7 +33,7 @@ void StateManager::Update(float dt)
     }
     else
     {
-        std::cout << "Resume" << std::endl;
+        
     }
 }
 
