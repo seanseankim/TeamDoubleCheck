@@ -1,0 +1,131 @@
+#include "Component_Sprite.h"
+#include "angles.hpp"
+#include "Mesh.hpp"
+#include <GL/glew.h>
+#include "StockShaders.hpp"
+#include "Graphic.h"
+#include "Object.h"
+
+void Helper_Addpoint_Circle(std::size_t& point_count, Mesh& mesh, float& radius, float position_x = 0, float position_y = 0, bool move_up_down = true)
+{
+    float theta;
+    float location_x;
+    float location_y;
+    for (int i = 1; i <= point_count + 1; i++)
+    {
+        theta = (TWO_PI * i) / static_cast<float>(point_count);
+        location_x = (radius * cosf(theta)) - position_x;
+        location_y = (radius * sinf(theta)) - position_y;
+        mesh.AddPoint({ location_x,location_y });
+        if (move_up_down)
+        {
+            mesh.AddTextureCoordinate({ to_radians(270.f), 10.f });
+        }
+        else if (!move_up_down)
+        {
+            mesh.AddTextureCoordinate({ to_radians(180.f), 10.f });
+        }
+    }
+
+}
+void Helper_Addpoint_Ellipse(std::size_t& point_count, Mesh& mesh, float& radius, float position_x = 0, float position_y = 0)
+{
+    float theta;
+    float location_y;
+    float location_x;
+    for (int i = 1; i <= point_count + 1; i++)
+    {
+        theta = (TWO_PI * i) / static_cast<float>(point_count);
+        location_x = (radius * cosf(theta)) - position_x;
+        location_y = (radius * sinf(theta) / 2) - position_y;
+        mesh.AddPoint({ location_x ,location_y });
+        mesh.AddTextureCoordinate({ to_radians(270.f), 10.f });
+    }
+
+}
+
+Mesh m_create_circle(float radius, Color4ub color, std::size_t point_count, vector2 origin = { 0.1f, 0.1f }, bool is_ellipse = false, float location_x = 0, float location_y = 0, bool move_up_down = true) noexcept
+{
+    Mesh temp_mesh;
+    (origin);
+    temp_mesh.AddColor(color);
+    temp_mesh.SetPointListType(PointListPattern::TriangleFan);
+    if (!is_ellipse)
+    {
+        Helper_Addpoint_Circle(point_count, temp_mesh, radius, location_x, location_y, move_up_down);
+    }
+    else if (is_ellipse)
+    {
+        Helper_Addpoint_Ellipse(point_count, temp_mesh, radius, location_x, location_y);
+    }
+
+    return temp_mesh;
+}
+
+Mesh m_create_wire_circle(float radius, Color4ub color, std::size_t point_count) noexcept
+{
+    Mesh temp_mesh;
+    temp_mesh.SetPointListType(PointListPattern::LineLoop);
+    temp_mesh.AddColor(color);
+    Helper_Addpoint_Circle(point_count, temp_mesh, radius);
+
+    return temp_mesh;
+}
+
+
+void Sprite::Init(Object* obj)
+{
+    m_owner = obj;
+
+    texture.LoadFromPNG("../Sprite/temp.png");
+   
+    material.shader = &SHADER::interpolated_colors();
+    material.matrix3Uniforms["to_ndc"] = MATRIX3::build_scale(2.0f / width, 2.0f / height);
+    
+    const auto layout = { VertexLayoutDescription::Position2WithFloats,
+    VertexLayoutDescription::Color4WithUnsignedBytes,
+    VertexLayoutDescription::TextureCoordinates2WithFloats };
+
+    Mesh square;
+    square = MESH::create_box(100, { 50, 0,0, 255 });
+    shape.InitializeWithMeshAndLayout(square, layout);
+
+    m_owner->SetMesh(square);
+}
+
+void Sprite::Update(float dt)
+{
+    shape.UpdateVerticesFromMesh(m_owner->GetMesh());
+
+    seconds += dt;
+
+    //if (Graphic::GetGraphic()->get_need_update_sprite())
+    if(m_owner->GetMesh().Get_Is_Moved() || Graphic::GetGraphic()->get_need_update_sprite())
+    {
+        for (auto& points : m_owner->GetMesh().Get_Points())
+        {
+            vector3 points_vec3;
+            points_vec3.x = points.x;
+            points_vec3.y = points.y;
+            points_vec3.z = 1.0f;
+
+            vector3 points_model_to_world = m_owner->GetTransform().GetModelToWorld() * points_vec3;
+            vector3 points_world_to_cam = Graphic::GetGraphic()->Get_View().Get_Camera().WorldToCamera() * points_model_to_world;
+            vector3 points_cam_to_ndc = Graphic::GetGraphic()->Get_View().Get_Camera_View().GetCameraToNDCTransform() * points_world_to_cam;
+            points_cam_to_ndc.x *= 640;
+            points_cam_to_ndc.y *= 360;
+
+            points.x = points_cam_to_ndc.x;
+            points.y = points_cam_to_ndc.y;
+        }
+
+        //Graphic::GetGraphic()->Get_View().Get_Camera_View().SetZoom(1.0f);
+
+        m_owner->GetMesh().Get_Is_Moved() = false;
+    }
+
+
+    material.floatUniforms["time"] = seconds;
+
+    Graphic::GetGraphic()->Draw(shape, material);
+}

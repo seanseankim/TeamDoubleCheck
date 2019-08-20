@@ -9,6 +9,7 @@ public:
     void Init();
     void Update();
     void Delete();
+    void Reset();
 
     bool IsDone() { return is_done; }
 
