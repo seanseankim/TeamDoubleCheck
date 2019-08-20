@@ -200,3 +200,8 @@ void Mesh::Clear() noexcept
     ClearTextureCoordinates();
 }
 
+std::vector<vector2>& Mesh::Get_Points()
+{
+    return points;
+}
+

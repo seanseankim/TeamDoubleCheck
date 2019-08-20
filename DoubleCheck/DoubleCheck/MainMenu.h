@@ -19,7 +19,7 @@ public:
     }
     virtual void Update(float dt)
     {
-        std::cout << "Menu Update" << std::endl;
+        
 
         if(input.Is_Key_Triggered(GLFW_KEY_N))
         {

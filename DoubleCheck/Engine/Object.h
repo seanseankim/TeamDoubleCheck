@@ -1,7 +1,8 @@
 #pragma once
 #include "Transform.hpp"
 #include "Mesh.hpp"
-#include "Component.hpp"
+#include "Component.hpp"/
+#include <string>
 
 class Object
 {
@@ -10,14 +11,19 @@ private:
     Mesh m_mesh;
     std::vector<Component*>components_;
     bool is_dead;
+    std::string m_name;
 
 public:
-    Transform GetTransform() { return m_transform; }
+    Transform& GetTransform() { return m_transform; }
     std::vector<Component*>GetComponentContainer() { return components_; }
 
-    Mesh GetMesh() { return m_mesh; }
+    Mesh& GetMesh() { return m_mesh; }
     template <typename COMPONENT>
     COMPONENT* GetComponentByTemplate() const;
+    void Set_Name(std::string name)
+    {
+        m_name = name;
+    }
 public:
     void SetDeadCondition(bool condition) { is_dead = condition; }
     bool IsDead() { return is_dead; }

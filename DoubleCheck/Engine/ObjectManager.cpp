@@ -43,7 +43,7 @@ void ObjectManager::Update(float dt)
     }
     else
     {
-        std::cout << "Object Manager Stop" << std::endl;
+        
     }
 }
 

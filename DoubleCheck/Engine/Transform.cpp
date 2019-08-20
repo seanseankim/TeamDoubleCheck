@@ -10,10 +10,7 @@ matrix3 Transform::GetModelToWorld() const noexcept
     {
         return parent->GetModelToWorld() * result;
     }
-    else
-    {
-        return result;
-    }
+    return result;
 }
 
 matrix3 Transform::GetWorldToModel() const noexcept
