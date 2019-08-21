@@ -31,12 +31,18 @@ public:
     void ClearTextureCoordinates() noexcept;
     void ClearPoints() noexcept;
     void Clear() noexcept;
+    std::vector<vector2>& Get_Points();
+    bool& Get_Is_Moved()
+    {
+        return is_moved;
+    }
 
 private:
     std::vector<vector2>  points{};
     std::vector<Color4ub> colors{};
     std::vector<vector2>  textureCoordinates{};
     PointListPattern      pointListType = PointListPattern::Lines;
+    bool is_moved = false;
 };
 
 namespace MESH

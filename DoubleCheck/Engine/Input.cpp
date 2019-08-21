@@ -81,13 +81,13 @@ void Input::Set_Keyboard_Input(int key, int action)
     case GLFW_PRESS:
         key_triggered.set(key);
         key_pressed.set(key);
-        key_released.set(key);
+        key_released.reset(key);
         break;
 
     case GLFW_RELEASE:
         key_triggered.reset(key);
         key_pressed.reset(key);
-        key_released.reset(key);
+        key_released.set(key);
         break;
 
     default:
