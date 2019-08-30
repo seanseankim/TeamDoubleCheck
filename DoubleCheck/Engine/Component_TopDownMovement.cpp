@@ -58,6 +58,6 @@ void Component_TopDownMovement::Update(float dt)
     }
     else
     {
-        //m_owner->GetTransform().SetTranslation({ 0.0f, 0.0f });
+        m_owner->GetTransform().SetTranslation({ 0.0f, 0.0f });
     }
 }
