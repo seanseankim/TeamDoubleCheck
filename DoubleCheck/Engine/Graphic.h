@@ -5,9 +5,6 @@
 #include "Vertices.hpp"
 #include "Material.hpp"
 #include "View.h"
-
-//#include "StockShader.h"
-
 class Graphic
 {
 public:

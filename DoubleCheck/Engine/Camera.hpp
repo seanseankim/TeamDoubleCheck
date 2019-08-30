@@ -3,8 +3,6 @@
 #include <matrix3.hpp>
 #include <vector2.hpp>
 
-
-
 class[[nodiscard]] Camera
 {
 public:

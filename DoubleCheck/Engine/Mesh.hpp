@@ -32,6 +32,7 @@ public:
     void ClearPoints() noexcept;
     void Clear() noexcept;
     std::vector<vector2>& Get_Points();
+
     bool& Get_Is_Moved()
     {
         return is_moved;

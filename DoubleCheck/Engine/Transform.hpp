@@ -15,9 +15,23 @@ public:
     void  SetDepth(float new_depth) noexcept;
 
     vector2 GetTranslation() const noexcept;
+    vector2 &GetTranslation_Reference()
+    {
+        return translation;
+    }
     void    SetTranslation(const vector2& new_translation) noexcept;
 
     vector2 GetScale() const noexcept;
+    vector2 &GetScale_Reference()
+    {
+        return scale;
+    }
+
+    vector2 &GetCenter()
+    {
+        return center;
+    }
+
     void    SetScale(const float& new_scale) noexcept;
     void    SetScale(const vector2& new_scale) noexcept;
 
@@ -33,5 +47,7 @@ private:
     float            rotation = 0.0f;
     float            depth = 0.0f;
     const Transform* parent = nullptr;
+
+    vector2          center{0.0f, 0.0f};
 };
 

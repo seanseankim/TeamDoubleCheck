@@ -77,11 +77,11 @@ void Sprite::Init(Object* obj)
 {
     m_owner = obj;
 
-    texture.LoadFromPNG("../Sprite/temp.png");
-   
+    //texture.LoadFromPNG("../Sprite/temp.png");
+
     material.shader = &SHADER::interpolated_colors();
     material.matrix3Uniforms["to_ndc"] = MATRIX3::build_scale(2.0f / width, 2.0f / height);
-    
+
     const auto layout = { VertexLayoutDescription::Position2WithFloats,
     VertexLayoutDescription::Color4WithUnsignedBytes,
     VertexLayoutDescription::TextureCoordinates2WithFloats };
@@ -91,9 +91,12 @@ void Sprite::Init(Object* obj)
     shape.InitializeWithMeshAndLayout(square, layout);
 
     m_owner->SetMesh(square);
+    m_owner->Get_Object_Points() = m_owner->GetMesh().Get_Points();
 }
-
-void Sprite::Update(float dt)
+/*
+ * Original
+ */
+ void Sprite::Update(float dt)
 {
     shape.UpdateVerticesFromMesh(m_owner->GetMesh());
 

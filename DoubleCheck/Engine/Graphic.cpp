@@ -25,6 +25,7 @@ void Graphic::Init()
     glewInit();
     glEnable(GL_DEPTH | GL_BLEND);
     view.Init();
+    Application::Get_Application()->Imgui_Init();
     //background color
     glClearColor(1 ,1,1,1);
 
@@ -34,6 +35,9 @@ void Graphic::Init()
 void Graphic::Update(float dt)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    Application::Get_Application()->Imgui_Update();
+
     seconds += dt;
 
     view.Update(dt);
