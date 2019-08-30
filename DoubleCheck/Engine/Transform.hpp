@@ -18,6 +18,7 @@ public:
     void    SetTranslation(const vector2& new_translation) noexcept;
 
     vector2 GetScale() const noexcept;
+
     void    SetScale(const float& new_scale) noexcept;
     void    SetScale(const vector2& new_scale) noexcept;
 

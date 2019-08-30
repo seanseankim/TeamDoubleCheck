@@ -14,6 +14,7 @@ private:
     std::string m_name;
 
 public:
+    
     Transform& GetTransform() { return m_transform; }
     std::vector<Component*>GetComponentContainer() { return components_; }
 
@@ -36,6 +37,8 @@ public:
     void SetScale(float scale);
     void SetDepth(float depth);
     void SetMesh(Mesh mesh);
+
+    std::string GetName();
 
     /*bool IsDead()
     {

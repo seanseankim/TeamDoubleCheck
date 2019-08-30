@@ -12,6 +12,7 @@
 #include "Component_Transform.h"
 #include "Component_TopDownMovement.h"
 #include "GL.hpp"
+#include "Physics.h"
 
 namespace
 {
@@ -38,25 +39,28 @@ void Engine::Init()
     state_manager->AddState("Level1", new Level1);
 
     Object* temp = new Object();
+    temp->AddComponent(new Physics);
     temp->AddComponent(new Sprite());
     temp->AddComponent(new Component_Transform());
     temp->AddComponent(new Component_TopDownMovement());
+    temp->GetComponentByTemplate<Physics>()->BoxToBoxCollision(temp->GetMesh());
+    temp->GetComponentContainer()[0]->SetComponentName("CircleToCircleCollision");
+
     temp->Set_Name("first");
 
     Object* temp_sec = new Object();
+    temp_sec->AddComponent(new Physics);
     temp_sec->AddComponent(new Sprite());
     temp_sec->AddComponent(new Component_Transform());
+    temp_sec->GetComponentByTemplate<Physics>()->BoxToBoxCollision(temp->GetMesh());
+    temp_sec->GetComponentContainer()[0]->SetComponentName("CircleToCircleCollision");
     temp_sec->Set_Name("second");
 
     object_manager->AddObject(temp);
     object_manager->AddObject(temp_sec);
 
     game_timer.Reset();
-
-    
 }
-
-
 
 void Engine::Update()
 {
@@ -85,4 +89,3 @@ void Engine::Reset()
     Graphic::GetGraphic()->Get_View().Get_Camera_View().SetZoom(1.0f);
     Graphic::GetGraphic()->Get_View().Get_Camera().SetCenter({ 0,0 });
 }
-

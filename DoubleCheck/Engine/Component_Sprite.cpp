@@ -87,7 +87,7 @@ void Sprite::Init(Object* obj)
     VertexLayoutDescription::TextureCoordinates2WithFloats };
 
     Mesh square;
-    square = MESH::create_box(100, { 50, 0,0, 255 });
+    square = MESH::create_circle(100, { 50, 0,0, 255 });
     shape.InitializeWithMeshAndLayout(square, layout);
 
     m_owner->SetMesh(square);

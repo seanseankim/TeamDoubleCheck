@@ -56,8 +56,8 @@ void Component_TopDownMovement::Update(float dt)
        // Graphic::GetGraphic()->get_need_update_sprite() = true;
         m_owner->GetMesh().Get_Is_Moved() = true;
     }
-    else
-    {
-        m_owner->GetTransform().SetTranslation({ 0.0f, 0.0f });
-    }
+    //else
+    //{
+    //    m_owner->GetTransform().SetTranslation({ 0.0f, 0.0f });
+    //}
 }
