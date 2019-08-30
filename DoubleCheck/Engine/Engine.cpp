@@ -12,9 +12,10 @@
 #include "Component_Transform.h"
 #include "Component_TopDownMovement.h"
 #include "GL.hpp"
+#include "Physics.h"
 #include "Message_Manager.h"
 #include "Component_Enemy.h"
-#include "Physics.h"
+
 namespace
 {
     Application* app_ = nullptr;

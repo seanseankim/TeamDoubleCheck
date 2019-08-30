@@ -163,6 +163,15 @@ vector2 Mesh::GetTextureCoordinate(std::size_t index) const noexcept
     return { 0, 0 };
 }
 
+vector2 Mesh::GetCenterPoint() const noexcept
+{
+    const int mid_point = GetPointCount() / 2;
+
+    const vector2 center_point = (points.at(0) + points.at(mid_point)) / 2.f;
+
+    return center_point;
+}
+
 PointListPattern Mesh::GetPointListPattern() const noexcept { return pointListType; }
 
 void Mesh::SetPointListType(PointListPattern type) noexcept { pointListType = type; }
@@ -204,4 +213,3 @@ std::vector<vector2>& Mesh::Get_Points()
 {
     return points;
 }
-
