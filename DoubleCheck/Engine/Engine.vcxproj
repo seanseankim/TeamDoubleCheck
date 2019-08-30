@@ -169,7 +169,6 @@
     <ClInclude Include="CameraView.hpp" />
     <ClInclude Include="Color4ub.hpp" />
     <ClInclude Include="Component.hpp" />
-    <ClInclude Include="Component_Enemy.h" />
     <ClInclude Include="Component_TopDownMovement.h" />
     <ClInclude Include="Component_Transform.h" />
     <ClInclude Include="Engine.hpp" />
@@ -208,8 +207,6 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraView.cpp" />
     <ClCompile Include="Color.cpp" />
-    <ClCompile Include="Component_Enemy.cpp" />
-    <ClCompile Include="Component_Player.cpp" />
     <ClCompile Include="Component_TopDownMovement.cpp" />
     <ClCompile Include="Component_Transform.cpp" />
     <ClCompile Include="Engine.cpp" />

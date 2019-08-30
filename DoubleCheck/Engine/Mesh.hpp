@@ -16,7 +16,9 @@ public:
     std::size_t GetPointCount() const noexcept;
     vector2     GetPoint(std::size_t index) const noexcept;
     Color4ub    GetColor(std::size_t index = 0) const noexcept;
-    vector2     GetTextureCoordinate(std::size_t index) const noexcept;
+    vector2     GetTextureCoordinate(std::size_t index) const 
+    noexcept;
+    vector2 GetCenterPoint() const noexcept;
 
     PointListPattern GetPointListPattern() const noexcept;
     void             SetPointListType(PointListPattern type) noexcept;

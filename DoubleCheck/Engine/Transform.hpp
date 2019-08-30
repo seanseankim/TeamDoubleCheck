@@ -31,7 +31,6 @@ public:
     {
         return center;
     }
-
     void    SetScale(const float& new_scale) noexcept;
     void    SetScale(const vector2& new_scale) noexcept;
 

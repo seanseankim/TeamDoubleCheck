@@ -77,6 +77,12 @@ public:
     void SetScale(float scale);
     void SetDepth(float depth);
     void SetMesh(Mesh mesh);
+    std::string GetName();
+
+    /*bool IsDead()
+    {
+        return is_dead;
+    }*/
 };
 
 template <typename COMPONENT>
