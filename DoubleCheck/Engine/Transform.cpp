@@ -1,5 +1,5 @@
 #include "Transform.hpp"
-
+#include <iostream>
 matrix3 Transform::GetModelToWorld() const noexcept
 {
     matrix3 result = MATRIX3::build_identity();
@@ -57,11 +57,13 @@ float Transform::GetDepth() const noexcept
 
 void Transform::SetDepth(float new_depth) noexcept
 {
+	
     depth = new_depth;
 }
 
 vector2 Transform::GetTranslation() const noexcept
 {
+	std::cout << save_translation.x;
     return translation;
 }
 
@@ -69,8 +71,20 @@ void Transform::SetTranslation(const vector2& new_translation) noexcept
 {
     translation.x = new_translation.x;
     translation.y = new_translation.y;
-}
 
+	save_translation.x += translation.x;
+	save_translation.y += translation.y;
+	//std::cout << save_translation.y;
+}
+vector2 Transform::Get_Save_Translation()const noexcept
+{
+	std::cout << save_translation.x;
+	return save_translation;
+}
+//void Transform::Set_Save_Translation(const vector2& new_translation)noexcept
+//{
+//	
+//}
 vector2 Transform::GetScale() const noexcept
 {
     return scale;

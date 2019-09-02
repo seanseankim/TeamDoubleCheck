@@ -48,6 +48,7 @@ void Graphic::Update(float dt)
 
 void Graphic::Delete()
 {
+	graphic = nullptr;
 }
 
 void Graphic::Draw(Vertices& shape, material material)
