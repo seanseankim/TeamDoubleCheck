@@ -7,8 +7,6 @@ void Level1::Load()
     player = new Object();
 
     ObjectManager::GetObjectManager()->AddObject(player);
-
-    
 }
 
 void Level1::Update(float dt)

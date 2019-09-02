@@ -12,16 +12,20 @@
 #include "Component_Transform.h"
 #include "Component_TopDownMovement.h"
 #include "GL.hpp"
+#include "Physics.h"
+#include "Message_Manager.h"
+#include "Component_Enemy.h"
 
 #include<iostream>
 #include"Transform.hpp"
 
 namespace
 {
-    Application* app_ = nullptr;//키보드
-    ObjectManager* object_manager = nullptr;//모든object관리
-    StateManager* state_manager = nullptr;//
+    Application* app_ = nullptr;
+    ObjectManager* object_manager = nullptr;
+    StateManager* state_manager = nullptr;
     Graphic* graphic = nullptr;
+    Message_Manager* msg_manager = nullptr;
 }
 
 void Engine::Init()
@@ -30,25 +34,34 @@ void Engine::Init()
     object_manager = ObjectManager::GetObjectManager();
     state_manager = StateManager::GetStateManager();
     graphic = Graphic::GetGraphic();
+    msg_manager = Message_Manager::Get_Message_Manager();
 
     app_->Init();
     object_manager->Init();
     state_manager->Init();
     graphic->Init();
+    msg_manager->Init();
     
-
     state_manager->AddState("Menu", new Menu);
     state_manager->AddState("Level1", new Level1);
 
     Object* temp = new Object();
+    temp->AddComponent(new Physics);
     temp->AddComponent(new Sprite());
-    temp->AddComponent(new Component_Transform());//장착component
+    temp->AddComponent(new Player());
+    temp->AddComponent(new Component_Transform());
     temp->AddComponent(new Component_TopDownMovement());
+    temp->GetComponentByTemplate<Physics>()->BoxToBoxCollision(temp->GetMesh());
+    temp->GetComponentContainer()[0]->SetComponentName("CircleToCircleCollision");
+
     temp->Set_Name("first");
 
     Object* temp_sec = new Object();
+    temp_sec->AddComponent(new Physics);
     temp_sec->AddComponent(new Sprite());
     temp_sec->AddComponent(new Component_Transform());
+    temp_sec->GetComponentByTemplate<Physics>()->BoxToBoxCollision(temp->GetMesh());
+    temp_sec->GetComponentContainer()[0]->SetComponentName("CircleToCircleCollision");
     temp_sec->Set_Name("second");
 
     object_manager->AddObject(temp);
@@ -56,14 +69,14 @@ void Engine::Init()
 
     game_timer.Reset();
 }
-void Engine::Test()//나중에 game level로 대체
+void Engine::Test()
 {
 	state_manager->AddState("Menu", new Menu);
 	state_manager->AddState("Level1", new Level1);
 
 	Object* temp = new Object();
 	temp->AddComponent(new Sprite());
-	temp->AddComponent(new Component_Transform());//장착component
+	temp->AddComponent(new Component_Transform());
 	temp->AddComponent(new Component_TopDownMovement());
 	temp->Set_Name("first");
 
@@ -71,7 +84,6 @@ void Engine::Test()//나중에 game level로 대체
 	temp_sec->AddComponent(new Sprite());
 	temp_sec->AddComponent(new Component_Transform());
 	temp_sec->Set_Name("second");
-	//transform안에gettranslation 위치, 이동
 
 	//std::cout << temp->GetTransform.GetTranslation();
 	std::cout << temp->GetTransform().Get_Save_Translation().x;
@@ -98,6 +110,7 @@ void Engine::Update()
     state_manager->Update(m_dt);
     graphic->Update(m_dt);
     object_manager->Update(m_dt);
+    msg_manager->Update(m_dt);
 
     //Reset camera zoom
     Reset();
@@ -116,4 +129,3 @@ void Engine::Reset()
     Graphic::GetGraphic()->Get_View().Get_Camera_View().SetZoom(1.0f);
     Graphic::GetGraphic()->Get_View().Get_Camera().SetCenter({ 0,0 });
 }
-
