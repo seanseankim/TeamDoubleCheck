@@ -21,9 +21,9 @@
 
 namespace
 {
-    Application* app_ = nullptr;//Ű����
-    ObjectManager* object_manager = nullptr;//���object����
-    StateManager* state_manager = nullptr;//
+    Application* app_ = nullptr;
+    ObjectManager* object_manager = nullptr;
+    StateManager* state_manager = nullptr;
     Graphic* graphic = nullptr;
     Message_Manager* msg_manager = nullptr;
 }
@@ -69,14 +69,14 @@ void Engine::Init()
 
     game_timer.Reset();
 }
-void Engine::Test()//���߿� game level�� ��ü
+void Engine::Test()
 {
 	state_manager->AddState("Menu", new Menu);
 	state_manager->AddState("Level1", new Level1);
 
 	Object* temp = new Object();
 	temp->AddComponent(new Sprite());
-	temp->AddComponent(new Component_Transform());//����component
+	temp->AddComponent(new Component_Transform());
 	temp->AddComponent(new Component_TopDownMovement());
 	temp->Set_Name("first");
 
@@ -84,7 +84,6 @@ void Engine::Test()//���߿� game level�� ��ü
 	temp_sec->AddComponent(new Sprite());
 	temp_sec->AddComponent(new Component_Transform());
 	temp_sec->Set_Name("second");
-	//transform�ȿ�gettranslation ��ġ, �̵�
 
 	//std::cout << temp->GetTransform.GetTranslation();
 	std::cout << temp->GetTransform().Get_Save_Translation().x;
