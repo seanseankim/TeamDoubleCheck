@@ -146,5 +146,4 @@ void Input::Set_Mouse_Wheel(double x, double y)
 {
     x_offset = x;
     y_offset = y;
-
 }

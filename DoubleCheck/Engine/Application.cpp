@@ -2,6 +2,7 @@
 #include <iostream>
 #include "vector2.hpp"
 #include "Input.h"
+#include <sstream>
 
 Application* Application::application = nullptr;
 
@@ -12,7 +13,8 @@ namespace
     void    cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
     void    mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
     void    scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-    bool    is_full = false;
+	//void	framebuffer_size_callback(GLFWwindow* window, int width, int height);
+	bool    is_full = false;
 }
 
 
@@ -37,7 +39,8 @@ void Application::Init()
 
     window = glfwCreateWindow(1280, 720, "sangministhebest", nullptr, nullptr);
     glfwMakeContextCurrent(window);
-
+	/*glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwGetFramebufferSize(window, &width, &height);*/
     if (!window)
     {
         glfwTerminate();
@@ -66,6 +69,10 @@ void Application::Init()
 
     glfwSwapInterval(true);
 }
+//void Application::framebuffer_size_callback(GLFWwindow* window, int width, int height)
+//{
+//	glViewport(0, 0, width, height);
+//}
 
 void Application::Update(float dt)
 {
@@ -79,46 +86,95 @@ void Application::Update(float dt)
     window_size.width = (float)w;
     window_size.height = (float)h;
 
+	if (input.Is_Key_Triggered(GLFW_KEY_F))
+	{
+		Toggle_Fullscreen();
+	}
+	if (input.Is_Key_Triggered(GLFW_KEY_K))
+	{
+		Save();
+
+	}
+	if (input.Is_Key_Triggered(GLFW_KEY_R))
+	{
+		Clear();
+		
+		Engine re_start;
+		re_start.Test();
+	}
+
+	save_dt += dt;
+	if (save_dt >= 1.0f)
+	{
+		std::stringstream title;
+		title <<"sangministhebest" << " " << " [" << FPS_frame << " FPS]";
+		glfwSetWindowTitle(window, title.str().c_str());
+		FPS_frame = 0;
+		save_dt = 0;
+	}
+	FPS_frame++;
+
+	if (input.Is_Key_Triggered(GLFW_KEY_ESCAPE))
+	{
+		exit(0);
+	}
     if(input.Is_Mouse_Double_Clicked(GLFW_MOUSE_BUTTON_LEFT))
     {
         std::cout << "aaa" << std::endl;
     }
+	
+	/*std::cout << FPS_frame << " "<<std::endl;
+	std::cout << dt << " ";*/
 }
 
 void Application::Delete()
 {
+	
+}
 
+void Application::Save()
+{
+	//Transform a;
+	Transform::Transform().Get_Save_Translation();
+	//std::cout<< Transform::Transform().Get_Save_Translation().x;
+}
 
+void Application::Clear()
+{
+	ObjectManager::GetObjectManager()->Init();
+	StateManager::GetStateManager()->Init();
+	Graphic::GetGraphic()->Init();
+}
+bool Application::IsFullScreen()
+{
+	return glfwGetWindowMonitor(window);
+}
+
+void Application::TurnOnMonitorVerticalSynchronization(bool enable)
+{
+	get_vsync = enable;
+	glfwSwapInterval(enable);
 }
 
 void Application::Toggle_Fullscreen()
 {
-    const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-    GLFWmonitor*       monitor = glfwGetPrimaryMonitor();
-    vector2 desired_size;
-
-    if(is_full)
-    {
-        //glfwSetWindowMonitor(window, nullptr, prev_x_pos, prev_y_pos, prev_width, prev_height, 0);
-        //glViewport(0, 0, prev_width, prev_height);
-        //desired_size.width = prev_width;
-        //desired_size.height = prev_height;
-        glfwGetWindowPos(window, &prev_x_pos, &prev_y_pos);
-        glfwGetWindowSize(window, &prev_width, &prev_height);
-        glfwSetWindowMonitor(window, monitor, 0, 0, static_cast<int>(mode->width), static_cast<int>(mode->height), 0);
-        //glViewport(0, 0, mode->width, mode->height);
-        desired_size.width = mode->width;
-        desired_size.height = mode->height;
-        glfwSwapInterval(true);
-    }
-    else
-    {
-        glfwSetWindowMonitor(window, nullptr, prev_x_pos, prev_y_pos, prev_width, prev_height, 0);
-        //glViewport(0, 0, prev_width, prev_height);
-        desired_size.width = prev_width;
-        desired_size.height = prev_height;
-        glfwSwapInterval(true);
-    }
+	if (!IsFullScreen())
+	{
+		const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+		GLFWmonitor*       monitor = glfwGetPrimaryMonitor();
+		glfwGetWindowPos(window, &x_pos, &y_pos);
+		glfwGetWindowSize(window, &width, &height);
+		glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+		glViewport(0, 0, mode->width, mode->height);
+		TurnOnMonitorVerticalSynchronization(get_vsync);
+	}
+	else
+	{
+		glfwSetWindowMonitor(window, nullptr, x_pos, y_pos, width, height, 0);
+		glViewport(0, 0, width, height);
+	}
+	glfwSwapBuffers(window);
+	glfwSwapInterval(true);
 }
 
 Application* Application::Get_Application()
@@ -127,7 +183,6 @@ Application* Application::Get_Application()
         application = new Application;
 
     return application;
-
 }
 
 namespace
@@ -148,4 +203,8 @@ namespace
     {
         input.Set_Mouse_Wheel(xoffset, yoffset);
     }
+	/*void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+	{
+		glViewport(0, 0, width, height);
+	}*/
 }

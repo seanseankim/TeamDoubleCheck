@@ -21,7 +21,7 @@ void ObjectManager::Init()
 
 void ObjectManager::Update(float dt)
 {
-    if (StateManager::GetStateManager()->is_pause)
+    if (StateManager::GetStateManager()->is_pause)//
     {
         delete_obj.clear();
 
@@ -34,7 +34,6 @@ void ObjectManager::Update(float dt)
             if (obj->IsDead())
                 delete_obj.push_back(obj);
         }
-
 
         for (auto& remove_obj : delete_obj)
         {

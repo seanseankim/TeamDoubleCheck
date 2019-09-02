@@ -17,6 +17,9 @@ public:
     vector2 GetTranslation() const noexcept;
     void    SetTranslation(const vector2& new_translation) noexcept;
 
+	vector2 Get_Save_Translation()const noexcept;
+	//void Set_Save_Translation(const vector2& new_translation)noexcept;
+
     vector2 GetScale() const noexcept;
     void    SetScale(const float& new_scale) noexcept;
     void    SetScale(const vector2& new_scale) noexcept;
@@ -30,6 +33,7 @@ public:
 private:
     vector2          translation{};
     vector2          scale{1.0f, 1.0f};
+	vector2			 save_translation{0, 0};
     float            rotation = 0.0f;
     float            depth = 0.0f;
     const Transform* parent = nullptr;
