@@ -46,23 +46,23 @@ void Engine::Init()
     state_manager->AddState("Level1", new Level1);
 
     Object* temp = new Object();
-    temp->AddComponent(new Physics);
+    //temp->AddComponent(new Physics);
     temp->AddComponent(new Sprite());
     temp->AddComponent(new Player());
     temp->AddComponent(new Component_Transform());
     temp->AddComponent(new Component_TopDownMovement());
-    temp->GetComponentByTemplate<Physics>()->BoxToBoxCollision(temp->GetMesh());
-    temp->GetComponentContainer()[0]->SetComponentName("CircleToCircleCollision");
+    //temp->GetComponentByTemplate<Physics>()->BoxToBoxCollision(temp->GetMesh());
+    //temp->GetComponentContainer()[0]->SetComponentName("CircleToCircleCollision");
 
     temp->Set_Name("first");
 
     Object* temp_sec = new Object();
-    temp_sec->AddComponent(new Physics);
+    //temp_sec->AddComponent(new Physics);
     temp_sec->AddComponent(new Sprite());
     temp_sec->AddComponent(new Component_Transform());
-    temp_sec->GetComponentByTemplate<Physics>()->BoxToBoxCollision(temp->GetMesh());
-    temp_sec->GetComponentContainer()[0]->SetComponentName("CircleToCircleCollision");
-    temp_sec->Set_Name("second");
+    //temp_sec->GetComponentByTemplate<Physics>()->BoxToBoxCollision(temp->GetMesh());
+    //temp_sec->GetComponentContainer()[0]->SetComponentName("CircleToCircleCollision");
+    //temp_sec->Set_Name("second");
 
     object_manager->AddObject(temp);
     object_manager->AddObject(temp_sec);
@@ -86,7 +86,7 @@ void Engine::Test()
 	temp_sec->Set_Name("second");
 
 	//std::cout << temp->GetTransform.GetTranslation();
-	std::cout << temp->GetTransform().Get_Save_Translation().x;
+	//std::cout << temp->GetTransform().Get_Save_Translation().x;
 	/*Object* temp_third = new Object();
 	temp_third->AddComponent(new Sprite());
 	temp_third->AddComponent(new Component_Transform);
