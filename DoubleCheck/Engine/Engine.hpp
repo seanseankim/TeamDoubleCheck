@@ -11,6 +11,8 @@ public:
     void Delete();
     void Reset();
 
+	void Test();
+
     bool IsDone() { return is_done; }
 
 private:

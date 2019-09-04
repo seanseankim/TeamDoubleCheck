@@ -1,8 +1,3 @@
-/*
- * Rudy Castan
- * Graphics Library
- * CS230
- */
 #pragma once
 #include "Color4f.hpp"
 

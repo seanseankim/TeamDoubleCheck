@@ -91,7 +91,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Math_lib;$(SolutionDir)external\glew\include;$(SolutionDir)external\glfw\include;$(SolutionDir)external\stb\include;$(SolutionDir)external\glm\glm;$(SolutionDir)Sprite</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Math_lib;$(SolutionDir)external\glew\include;$(SolutionDir)external\glfw\include;$(SolutionDir)external\stb\include;$(SolutionDir)external\glm\glm;$(SolutionDir)Sprite;$(SolutionDir)external\imgui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Lib>
@@ -104,7 +104,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Math_lib;$(SolutionDir)external\glew\include;$(SolutionDir)external\glfw\include;$(SolutionDir)external\stb\include;$(SolutionDir)external\glm\glm;$(SolutionDir)Sprite</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Math_lib;$(SolutionDir)external\glew\include;$(SolutionDir)external\glfw\include;$(SolutionDir)external\stb\include;$(SolutionDir)external\glm\glm;$(SolutionDir)Sprite;$(SolutionDir)external\imgui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Lib>
@@ -119,7 +119,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Math_lib;$(SolutionDir)external\glew\include;$(SolutionDir)external\glfw\include;$(SolutionDir)external\stb\include;$(SolutionDir)external\glm\glm;$(SolutionDir)Sprite</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Math_lib;$(SolutionDir)external\glew\include;$(SolutionDir)external\glfw\include;$(SolutionDir)external\stb\include;$(SolutionDir)external\glm\glm;$(SolutionDir)Sprite;$(SolutionDir)external\imgui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
@@ -138,7 +138,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Math_lib;$(SolutionDir)external\glew\include;$(SolutionDir)external\glfw\include;$(SolutionDir)external\stb\include;$(SolutionDir)external\glm\glm;$(SolutionDir)Sprite</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Math_lib;$(SolutionDir)external\glew\include;$(SolutionDir)external\glfw\include;$(SolutionDir)external\stb\include;$(SolutionDir)external\glm\glm;$(SolutionDir)Sprite;$(SolutionDir)external\imgui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
@@ -155,12 +155,21 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\external\imgui\imconfig.h" />
+    <ClInclude Include="..\external\imgui\imgui.h" />
+    <ClInclude Include="..\external\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="..\external\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="..\external\imgui\imgui_internal.h" />
+    <ClInclude Include="..\external\imgui\imstb_rectpack.h" />
+    <ClInclude Include="..\external\imgui\imstb_textedit.h" />
+    <ClInclude Include="..\external\imgui\imstb_truetype.h" />
     <ClInclude Include="angles.hpp" />
     <ClInclude Include="Application.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="CameraView.hpp" />
     <ClInclude Include="Color4ub.hpp" />
     <ClInclude Include="Component.hpp" />
+    <ClInclude Include="Component_Enemy.h" />
     <ClInclude Include="Component_TopDownMovement.h" />
     <ClInclude Include="Component_Transform.h" />
     <ClInclude Include="Engine.hpp" />
@@ -171,9 +180,12 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="Material.hpp" />
     <ClInclude Include="Mesh.hpp" />
+    <ClInclude Include="Message.h" />
+    <ClInclude Include="Message_Manager.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Component_Player.h" />
+    <ClInclude Include="Physics.h" />
     <ClInclude Include="Shader.hpp" />
     <ClInclude Include="Component_Sprite.h" />
     <ClInclude Include="State.h" />
@@ -187,10 +199,18 @@
     <ClInclude Include="View.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\external\imgui\imgui.cpp" />
+    <ClCompile Include="..\external\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\external\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\external\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="..\external\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\external\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraView.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Component_Enemy.cpp" />
+    <ClCompile Include="Component_Player.cpp" />
     <ClCompile Include="Component_TopDownMovement.cpp" />
     <ClCompile Include="Component_Transform.cpp" />
     <ClCompile Include="Engine.cpp" />
@@ -199,8 +219,11 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Message.cpp" />
+    <ClCompile Include="Message_Mananger.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Component_Sprite.cpp" />
     <ClCompile Include="StateManager.cpp" />

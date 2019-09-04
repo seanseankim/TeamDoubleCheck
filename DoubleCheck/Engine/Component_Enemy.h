@@ -1,18 +1,16 @@
 #pragma once
 #include "Component.hpp"
 #include <iostream>
+#include "Object.h"
 
-class Player : public Component
+class Component_Enemy : public Component
 {
 public:
     void Init(Object *obj) override;
     void Update(float dt) override;
-    void Attack();
-    int Get_Damage()
-    {
-        return damage;
-    }
+    void Decrease_HP(int dmg = 1);
 
 private:
-    int damage = 2;
+    int hp = 20;
+
 };

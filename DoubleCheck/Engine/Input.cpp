@@ -8,11 +8,11 @@ Input input;
 void Input::Init()
 {
     key_pressed.reset();
-    key_released.reset();
+    key_released.set();
     key_triggered.reset();
 
     mouse_triggered.reset();
-    mouse_released.reset();
+    mouse_released.set();
     mouse_double_clicked.reset();
     mouse_pressed.reset();
 
@@ -104,7 +104,7 @@ void Input::Set_Mouse_Input(int button, int action)
     case GLFW_PRESS:
         mouse_triggered.set(button);
         mouse_pressed.set(button);
-        mouse_released.set(button);
+        mouse_released.reset(button);
         break;
 
     case GLFW_RELEASE:
@@ -124,7 +124,7 @@ void Input::Set_Mouse_Input(int button, int action)
         }
         mouse_triggered.reset(button);
         mouse_pressed.reset(button);
-        mouse_released.reset(button);
+        mouse_released.set(button);
     }
     break;
 
@@ -146,5 +146,4 @@ void Input::Set_Mouse_Wheel(double x, double y)
 {
     x_offset = x;
     y_offset = y;
-
 }

@@ -20,6 +20,11 @@ public:
     {
         return objects;
     }
+    std::vector<std::shared_ptr<Object>> GetObjectManagerContainer_Value()
+    {
+        return objects;
+    }
+    
 
 
 private:
