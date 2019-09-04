@@ -86,7 +86,11 @@ void Engine::Test()
 	temp_sec->Set_Name("second");
 
 	//std::cout << temp->GetTransform.GetTranslation();
-	std::cout << temp->GetTransform().Get_Save_Translation().x;
+
+
+	//std::cout << temp->GetTransform().Get_Save_Translation().x;
+
+
 	/*Object* temp_third = new Object();
 	temp_third->AddComponent(new Sprite());
 	temp_third->AddComponent(new Component_Transform);

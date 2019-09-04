@@ -63,7 +63,7 @@ void Transform::SetDepth(float new_depth) noexcept
 
 vector2 Transform::GetTranslation() const noexcept
 {
-	std::cout << save_translation.x;
+	//std::cout << save_translation.x;
     return translation;
 }
 
@@ -78,7 +78,7 @@ void Transform::SetTranslation(const vector2& new_translation) noexcept
 }
 vector2 Transform::Get_Save_Translation()const noexcept
 {
-	std::cout << save_translation.x;
+	//std::cout << save_translation.x;
 	return save_translation;
 }
 //void Transform::Set_Save_Translation(const vector2& new_translation)noexcept
