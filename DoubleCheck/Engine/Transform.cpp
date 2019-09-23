@@ -1,5 +1,5 @@
 #include "Transform.hpp"
-#include <iostream>
+
 matrix3 Transform::GetModelToWorld() const noexcept
 {
     matrix3 result = MATRIX3::build_identity();
@@ -74,6 +74,13 @@ void Transform::SetTranslation(const vector2& new_translation) noexcept
 	save_translation.x += translation.x;
 	save_translation.y += translation.y;
 }
+
+void Transform::AddTranslation(const vector2& translation)
+{
+    this->translation.x += translation.x;
+    this->translation.y += translation.y;
+}
+
 vector2 Transform::Get_Save_Translation()const noexcept
 {
 	return save_translation;
