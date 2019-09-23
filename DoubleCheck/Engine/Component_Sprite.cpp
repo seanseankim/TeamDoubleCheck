@@ -87,11 +87,13 @@ void Sprite::Init(Object* obj)
     VertexLayoutDescription::TextureCoordinates2WithFloats };
 
     Mesh square;
-    square = MESH::create_circle(100, { 50, 0,0, 255 });
+    //square = MESH::create_circle(100, { 50, 0,0, 255 });
+    square = MESH::create_box(100, { 100,100,100,255 });
     shape.InitializeWithMeshAndLayout(square, layout);
 
     m_owner->SetMesh(square);
     m_owner->Get_Object_Points() = m_owner->GetMesh().Get_Points();
+    m_owner->curr_mat = MATRIX3::build_identity();
 }
 /*
  * Original
@@ -102,29 +104,14 @@ void Sprite::Init(Object* obj)
 
     seconds += dt;
 
-    //if (Graphic::GetGraphic()->get_need_update_sprite())
     if(m_owner->GetMesh().Get_Is_Moved() || Graphic::GetGraphic()->get_need_update_sprite())
     {
-        for (auto& points : m_owner->GetMesh().Get_Points())
-        {
-            vector3 points_vec3;
-            points_vec3.x = points.x;
-            points_vec3.y = points.y;
-            points_vec3.z = 1.0f;
-
-            vector3 points_model_to_world = m_owner->GetTransform().GetModelToWorld() * points_vec3;
-            vector3 points_world_to_cam = Graphic::GetGraphic()->Get_View().Get_Camera().WorldToCamera() * points_model_to_world;
-            vector3 points_cam_to_ndc = Graphic::GetGraphic()->Get_View().Get_Camera_View().GetCameraToNDCTransform() * points_world_to_cam;
-            points_cam_to_ndc.x *= 640;
-            points_cam_to_ndc.y *= 360;
-
-            points.x = points_cam_to_ndc.x;
-            points.y = points_cam_to_ndc.y;
-        }
-
-        //Graphic::GetGraphic()->Get_View().Get_Camera_View().SetZoom(1.0f);
+        matrix3 mat_ndc = Graphic::GetGraphic()->Get_View().Get_Camera_View().GetCameraToNDCTransform();
+        mat_ndc *= Graphic::GetGraphic()->Get_View().Get_Camera().WorldToCamera();
+        mat_ndc *= m_owner->GetTransform().GetModelToWorld();
 
         m_owner->GetMesh().Get_Is_Moved() = false;
+        material.matrix3Uniforms["to_ndc"] = mat_ndc;
     }
 
 

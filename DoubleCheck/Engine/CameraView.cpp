@@ -88,6 +88,13 @@ void CameraView::SetZoom(float new_zoom) noexcept
     helper_set_ndc(cameraToNDC, frameOfReference, displaySize, zoom);
 }
 
+void CameraView::AddZoom(float new_zoom)
+{
+    zoom += new_zoom;
+    cameraToNDC = GetCameraToNDCTransform();
+    helper_set_ndc(cameraToNDC, frameOfReference, displaySize, zoom);
+}
+
 void CameraView::SetFrameOfReference(FrameOfReference frame_of_reference) noexcept
 {
     frameOfReference = frame_of_reference;

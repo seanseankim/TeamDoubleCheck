@@ -1,10 +1,75 @@
 #include "Physics.h"
 #include "ObjectManager.h"
-#include "math.h"
+#include <cmath>
+#include <vector>
+#include "../Math_lib/vector2.hpp"
+#include "Input.h"
 
 void Physics::Init(Object* obj)
 {
     m_owner = obj;
+}
+
+void Physics::Acceleration()
+{
+    if (input.Is_Key_Pressed(GLFW_KEY_W))
+    {
+        acceleration += {0, 0.03};
+        m_owner->GetTransform().AddTranslation(acceleration);
+
+        if (input.Is_Key_Pressed(GLFW_KEY_A))
+        {
+            acceleration += {-0.03, 0.00};
+            m_owner->GetTransform().AddTranslation(acceleration);
+        }
+        else if (input.Is_Key_Pressed((GLFW_KEY_D)))
+        {
+            acceleration += {0.03, 0.00};
+            m_owner->GetTransform().AddTranslation(acceleration);
+        }
+
+        m_owner->GetMesh().Get_Is_Moved() = true;
+    }
+    else if (input.Is_Key_Pressed(GLFW_KEY_S))
+    {
+        acceleration += {0, -0.03};
+        m_owner->GetTransform().AddTranslation(acceleration);
+
+        if (input.Is_Key_Pressed((GLFW_KEY_A)))
+        {
+            acceleration += {-0.03, -0.00};
+            m_owner->GetTransform().AddTranslation(acceleration);
+        }
+        else if (input.Is_Key_Pressed((GLFW_KEY_D)))
+        {
+            acceleration += {0.03, -0.00};
+            m_owner->GetTransform().AddTranslation(acceleration);
+        }
+
+        m_owner->GetMesh().Get_Is_Moved() = true;
+    }
+    else if (input.Is_Key_Pressed((GLFW_KEY_A)))
+    {
+        acceleration += {-0.03, 0};
+        m_owner->GetTransform().AddTranslation(acceleration);
+
+        m_owner->GetMesh().Get_Is_Moved() = true;
+    }
+    else if (input.Is_Key_Pressed((GLFW_KEY_D)))
+    {
+        acceleration += {0.03, 0};
+        m_owner->GetTransform().AddTranslation(acceleration);
+
+        m_owner->GetMesh().Get_Is_Moved() = true;
+    }
+    else
+    {
+        acceleration -= {acceleration.x/200, acceleration.y/ 200};
+        m_owner->GetTransform().AddTranslation(acceleration);
+        m_owner->GetMesh().Get_Is_Moved() = true;
+    }
+
+
 }
 
 bool Physics::BoxToBoxCollision(Mesh mesh) const
@@ -31,33 +96,32 @@ bool Physics::BoxToBoxCollision(Mesh mesh) const
     }
 }
 
-bool Physics::CircleToCircleCollision(Transform transform) const
+bool Physics::CircleToCircleCollision(Object* object) const
 {
-    const vector2 my_translation = m_owner->GetTransform().GetTranslation();
+    const vector2 my_position = m_owner->Get_Object_Points();
     float distance;
+    float owner_radius;
+    float radius;
+    float ssiba;
+    owner_radius = m_owner->GetTransform().GetScale().x
+    radius = object->GetScale().x
+    ssiba = (my_position.x - object->Get_Object_Points()[0].x) * (my_position.x - object->Get_Object_Points());
+    distance = sqrt((my_position.x - position.x) * (my_position.x - position.x));
+    distance += sqrt((my_position.y - position.y) * (my_position.y - position.y));
 
-    if((my_translation.x * my_translation.x) + (my_translation.y * my_translation.y) >= (transform.GetTranslation().x * transform.GetTranslation().x) + (transform.GetTranslation().y * transform.GetTranslation().y))
-    {
-        distance = sqrt((my_translation.x * my_translation.x) + (my_translation.y * my_translation.y) - (transform.GetTranslation().x * transform.GetTranslation().x) + (transform.GetTranslation().y * transform.GetTranslation().y));
-    }
-    else
-    {
-        distance = sqrt((transform.GetTranslation().x * transform.GetTranslation().x) + (transform.GetTranslation().y * transform.GetTranslation().y) - (my_translation.x * my_translation.x) + (my_translation.y * my_translation.y));
-    }
-
-    if(distance > (m_owner->GetTransform().GetScale().x + transform.GetScale().x) / 2.f)
-    {
-        return false;
-    }
-    else
+    if(distance <= (owner_radius + radius))
     {
         return true;
+    }
+    else
+    {
+        return false;
     }
 }
 
 void Physics::Update(float dt)
 {
-    printf("%f, %f \n\n\n", m_owner->GetMesh().GetCenterPoint().x, m_owner->GetMesh().GetCenterPoint().y);
+    //printf("%f, %f \n\n\n", m_owner->GetMesh().GetCenterPoint().x, m_owner->GetMesh().GetCenterPoint().y);
     for (const auto& i : ObjectManager::GetObjectManager()->GetObjectManagerContainer())
     {
         if (i.get()->GetName() == m_owner->GetName())
@@ -77,6 +141,11 @@ void Physics::Update(float dt)
             {
                 printf("shit\n");
             }
+        }
+
+        if (i->GetName() == "first")
+        {
+            Acceleration();
         }
     }
 }

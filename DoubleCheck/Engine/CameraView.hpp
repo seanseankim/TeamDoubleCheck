@@ -10,7 +10,7 @@ public:
     void            SetZoom(float new_zoom) noexcept;
     constexpr float GetZoom() const noexcept { return zoom; }
     matrix3         GetCameraToNDCTransform() const noexcept { return cameraToNDC; }
-
+    void            AddZoom(float new_zoom);
     enum FrameOfReference
     {
         RightHanded_OriginCenter,

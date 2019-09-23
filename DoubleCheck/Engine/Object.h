@@ -21,9 +21,10 @@ private:
 
     //IMGUI
     bool is_selected = false;
-
+    
 
 public:
+    matrix3 curr_mat;
     Object()
     {
         m_id = object_id_increment;
@@ -56,6 +57,10 @@ public:
     int Get_Id()
     {
         return m_id;
+    }
+    vector2 GetScale() const
+    {
+        return m_transform.GetScale();
     }
 
     //IMGUI
