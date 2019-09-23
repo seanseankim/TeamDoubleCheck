@@ -126,6 +126,6 @@ void Engine::Delete()
 
 void Engine::Reset()
 {
-    Graphic::GetGraphic()->Get_View().Get_Camera_View().SetZoom(1.0f);
-    Graphic::GetGraphic()->Get_View().Get_Camera().SetCenter({ 0,0 });
+    //Graphic::GetGraphic()->Get_View().Get_Camera_View().SetZoom(1.0f);
+    //Graphic::GetGraphic()->Get_View().Get_Camera().SetCenter({ 0,0 });
 }

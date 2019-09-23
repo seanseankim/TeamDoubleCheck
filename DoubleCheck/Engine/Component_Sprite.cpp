@@ -93,6 +93,7 @@ void Sprite::Init(Object* obj)
 
     m_owner->SetMesh(square);
     m_owner->Get_Object_Points() = m_owner->GetMesh().Get_Points();
+    m_owner->curr_mat = MATRIX3::build_identity();
 }
 /*
  * Original
@@ -108,7 +109,7 @@ void Sprite::Init(Object* obj)
         matrix3 mat_ndc = Graphic::GetGraphic()->Get_View().Get_Camera_View().GetCameraToNDCTransform();
         mat_ndc *= Graphic::GetGraphic()->Get_View().Get_Camera().WorldToCamera();
         mat_ndc *= m_owner->GetTransform().GetModelToWorld();
-        
+
         m_owner->GetMesh().Get_Is_Moved() = false;
         material.matrix3Uniforms["to_ndc"] = mat_ndc;
     }

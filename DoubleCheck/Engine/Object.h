@@ -21,9 +21,10 @@ private:
 
     //IMGUI
     bool is_selected = false;
-
+    
 
 public:
+    matrix3 curr_mat;
     Object()
     {
         m_id = object_id_increment;
